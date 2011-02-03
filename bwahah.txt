@@ -1,0 +1,12 @@
+{"version":"0.1"}
+{"height":500,"layers":1,"width":500,"type":"Room"}
+{"hash":"c56abb9efadba8d35464424e7e53e9d0","name":"test.room.RandomSprite","layer":0,"y":250,"x":250}
+{"hash":"3d7d3dffcb70ce5124d75704221e92b4","name":"test.room.RandomSprite","layer":0,"y":250,"x":250}
+{"hash":"669bd293a81696493b9bbd858a360f2d","name":"test.room.RandomSprite","layer":0,"y":250,"x":250}
+{"hash":"3d7d3dffcb70ce5124d75704221e92b4","name":"test.room.RandomSprite","layer":0,"y":250,"x":250}
+{"hash":"c56abb9efadba8d35464424e7e53e9d0","name":"test.room.RandomSprite","layer":0,"y":250,"x":250}
+{"hash":"c56abb9efadba8d35464424e7e53e9d0","name":"test.room.RandomSprite","layer":0,"y":250,"x":250}
+{"hash":"c4c8ee07e55af23c2680b50e3c8bb26c","name":"test.room.RandomSprite","layer":0,"y":250,"x":250}
+{"hash":"c4c8ee07e55af23c2680b50e3c8bb26c","name":"test.room.RandomSprite","layer":0,"y":250,"x":250}
+{"hash":"c56abb9efadba8d35464424e7e53e9d0","name":"test.room.RandomSprite","layer":0,"y":250,"x":250}
+{"hash":"669bd293a81696493b9bbd858a360f2d","name":"test.room.RandomSprite","layer":0,"y":250,"x":250}
