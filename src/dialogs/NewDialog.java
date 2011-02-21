@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -17,6 +19,8 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import util.ImageUtil;
 
 import level.Room;
 import level.TiledRoom;
@@ -63,23 +67,8 @@ public class NewDialog extends JDialog implements ActionListener
 	public NewDialog(JFrame center)
 	{
 		super(center, true);
-		
-		BufferedImage image = null;
 
-		String q = "/resources/new.png";
-		String s = this.getClass().getResource(q).getPath();
-		s = s.replaceAll("%20", " ");
-
-		try
-		{
-			image = ImageIO.read(new File(s));
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-
-		this.setIconImage(image);
+		this.setIconImage(ImageUtil.getBufferedImage("/resources/new.png"));
 		
 		this.setTitle("New Level");
 		root = (JPanel)this.getContentPane();
@@ -112,7 +101,18 @@ public class NewDialog extends JDialog implements ActionListener
 		tiled.addActionListener(this);
 		finish.addActionListener(this);
 		
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		
+		this.addWindowListener(
+			    new WindowAdapter() 
+			    {
+			        public void windowClosing(WindowEvent e) 
+			        {
+			            isFinished = true;
+			            exit();
+			        }
+			    }
+			);
 		this.setLocationRelativeTo(center);
 		
 		changeDialog(FIRST);
@@ -230,5 +230,10 @@ public class NewDialog extends JDialog implements ActionListener
 			
 			isFinished = true;
 		}
+	}
+	
+	public void exit()
+	{
+		this.dispose();
 	}
 }

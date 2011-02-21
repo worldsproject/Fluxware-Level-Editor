@@ -1,7 +1,5 @@
 package gui;
 
-import error.CrashReport;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -62,7 +60,7 @@ public class SpritePanel extends JPanel
 		}
 		catch(Exception e)
 		{
-			new CrashReport(e);
+			//TODO
 		}
 		
 		return s;

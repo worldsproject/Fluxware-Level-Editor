@@ -4,13 +4,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.LinkedList;
 
-import level.Room;
-import level.TiledRoom;
-
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-
-import error.CrashReport;
 
 
 public class LevelConversions 
@@ -50,7 +45,7 @@ public class LevelConversions
 		}
 		catch (Exception e) 
 		{
-			new CrashReport(e);
+			//TODO
 		}
 	}
 }

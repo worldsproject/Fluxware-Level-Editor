@@ -6,7 +6,7 @@ import javax.swing.filechooser.FileFilter;
 
 /**
  * ImageFilter is a FileFileter that only allows images.
- * The only allowed images are "JPG, JPEG, PNG and GIF"
+ * The only allowed images are "PNG"
  * Extensions are case INsensitive.
  * @author atrus
  *
@@ -24,10 +24,7 @@ public class ImageFilter extends FileFilter
         
         if (extension != null) 
         {
-            if (extension.endsWith(".jpg") ||
-                extension.endsWith(".jpeg") ||
-                extension.endsWith(".png") ||
-                extension.endsWith(".gif")) 
+            if (extension.endsWith(".png")) 
             {
             	return true;
             } 
@@ -42,6 +39,6 @@ public class ImageFilter extends FileFilter
     
     public String getDescription() 
     {
-        return "Images of type: jpg, jpeg, png and gif";
+        return "Images of type: png";
     }
 }

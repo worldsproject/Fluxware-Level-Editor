@@ -8,7 +8,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.LinkedList;
@@ -29,12 +28,14 @@ import javax.swing.event.UndoableEditEvent;
 import javax.swing.undo.UndoManager;
 
 import level.Room;
+import listener.bounding.BoundingBox;
 import sprites.Sprite;
-import test.room.RandomSprite;
 import undo.UndoableSprite;
 import util.LevelConversions;
 import util.Point2D;
+import collision.Collision;
 import dialogs.NewDialog;
+import dialogs.NewSprite;
 
 public class GUI extends Game implements ActionListener, MouseListener
 {	
@@ -74,6 +75,8 @@ public class GUI extends Game implements ActionListener, MouseListener
 	private DragListener dl = new DragListener();
 	private int xdiff = 0;
 	private int ydiff = 0;
+	private int initialXDiff = 0;
+	private int initialYDiff = 0;
 
 	//Right Click menu variable.s
 	private JPopupMenu popup = new JPopupMenu("Sprite Options");
@@ -283,7 +286,7 @@ public class GUI extends Game implements ActionListener, MouseListener
 		}
 	}
 
-	private void open()  //Warning, does not check to see if a file has been edited.
+	private void open()  //TODO Warning, does not check to see if a file has been edited.
 	{
 		File loadLocation = null;
 
@@ -344,7 +347,8 @@ public class GUI extends Game implements ActionListener, MouseListener
 		}
 		else if(o == addSprite)
 		{
-			spritePanel.addSprite(new RandomSprite(0, 0));
+			NewSprite ns = new NewSprite(this);
+			spritePanel.addSprite(ns.getSprite());
 		}
 		else if(o == removeSprite)
 		{
@@ -359,8 +363,10 @@ public class GUI extends Game implements ActionListener, MouseListener
 	{
 		if(e.getSource() == dp)
 		{
-			LinkedList<Sprite> li = room.getSprites(new Point2D(e.getX(), e.getY(), 0));
+			Sprite temp = new Sprite(new BufferedImage(10, 10, 10), e.getX(), e.getY(), 0);
 
+			LinkedList<Sprite> li = Collision.hasCollided(temp, room.getSprites(), false);
+			
 			if(li.isEmpty() == false)
 			{
 				dragged = li.getLast();
@@ -368,6 +374,11 @@ public class GUI extends Game implements ActionListener, MouseListener
 				ydiff = e.getY() - dragged.getY();
 			}
 		}
+	}
+	
+	public void MP(MouseEvent e)
+	{
+		this.mousePressed(e);
 	}
 
 	@Override
@@ -409,7 +420,9 @@ public class GUI extends Game implements ActionListener, MouseListener
 				{
 					popup.show(e.getComponent(), e.getX(), e.getY());
 				}
-				LinkedList<Sprite> as = room.getSprites(new Point2D(e.getX(), e.getY(), 0));
+				
+				Sprite temp = new Sprite(new BufferedImage(1, 1, 1), e.getX(), e.getY(), 0);
+				LinkedList<Sprite> as = Collision.hasCollided(temp, room.getSprites(), false);
 
 				if(as.isEmpty() == false)
 				{
@@ -483,7 +496,8 @@ public class GUI extends Game implements ActionListener, MouseListener
 		}
 		
 		public void mousePressed(MouseEvent e)
-		{
+		{	
+			MP(e);
 			xs = e.getX() - xdiff;
 			ys = e.getY() - ydiff;
 		}

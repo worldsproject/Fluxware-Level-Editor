@@ -25,7 +25,6 @@ import javax.swing.KeyStroke;
 
 import level.Room;
 import sprites.Sprite;
-import error.CrashReport;
 
 /**
  * This class handles the details of creating and showing a png representation of
@@ -155,7 +154,7 @@ public class Render extends JFrame implements ActionListener
 					ImageIO.write(image, "png", jfc.getSelectedFile());
 				} catch (IOException e1) 
 				{
-					new CrashReport(e1);
+					//TODO
 				}
 			}
 		}
