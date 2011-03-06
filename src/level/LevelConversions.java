@@ -7,6 +7,8 @@ import java.util.LinkedList;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import errors.NoVersionException;
+
 
 public class LevelConversions 
 {
@@ -18,15 +20,27 @@ public class LevelConversions
 		{
 			BufferedReader fr = new BufferedReader(new FileReader(f));
 			
-			String version = fr.readLine();
+			String version = null;
+			try
+			{
+				version = fr.readLine();
+				
+				if(version == null)
+					throw new NoVersionException();
+			}
+			catch(NoVersionException ex)
+			{
+				version = ex.proposeSolution();
+			}
+			
 			String room = fr.readLine();
 			
-			LinkedList<String> list = new LinkedList<String>();
+			LinkedList<String> sprites = new LinkedList<String>();
 			String line = null;
 			
 			while((line = fr.readLine()) != null)
 			{
-				list.add(line);
+				sprites.add(line);
 			}
 			
 			JSONParser parser = new JSONParser();
