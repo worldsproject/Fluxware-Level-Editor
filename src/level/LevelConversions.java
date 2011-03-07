@@ -7,12 +7,13 @@ import java.util.LinkedList;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import errors.NoRoomException;
 import errors.NoVersionException;
 
 
 public class LevelConversions 
 {
-	public static void JSONToRoom(File f)
+	public static Room JSONToRoom(File f)
 	{
 		Room rv = null;
 		
@@ -33,7 +34,19 @@ public class LevelConversions
 				version = ex.proposeSolution();
 			}
 			
-			String room = fr.readLine();
+			String room = null;
+			
+			try
+			{
+				room = fr.readLine();
+				
+				if(room == null)
+					throw new NoRoomException();
+			}
+			catch(NoRoomException ex)
+			{
+				room = ex.proposeSolution();
+			}
 			
 			LinkedList<String> sprites = new LinkedList<String>();
 			String line = null;
