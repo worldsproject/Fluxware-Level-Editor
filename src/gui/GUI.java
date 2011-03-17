@@ -281,7 +281,7 @@ public class GUI extends Game implements ActionListener, MouseListener
 			{
 				saveLocation = jfc.getSelectedFile();
 
-				LevelConversions.RoomToJSON(room, saveLocation);
+				level.LevelConversions.RoomToJSON(room, saveLocation);
 			}
 		}
 	}
@@ -296,9 +296,10 @@ public class GUI extends Game implements ActionListener, MouseListener
 
 		if(which == JFileChooser.APPROVE_OPTION)
 		{
+			
 			loadLocation = jfc.getSelectedFile();
 
-			Room r = LevelConversions.JSONToRoom(loadLocation);
+			Room r = level.LevelConversions.JSONToRoom(loadLocation);
 			this.setRoom(r);
 		}
 	}
