@@ -1,21 +1,14 @@
 package level;
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.zip.ZipOutputStream;
-
-import javax.imageio.ImageIO;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -111,12 +104,10 @@ public class LevelConversions
 	
 	public static void RoomToJSON(Room room, File f)
 	{
+		LevelIO io = new LevelIO(f);
 		try
 		{
-			FileOutputStream fos = new FileOutputStream(f);
-            ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(fos));
-            
-			ArrayList<String> output = new ArrayList<String>(100);
+			LinkedList<String> output = new LinkedList<String>();
 			
 			JSONObject obj = new JSONObject();
 			obj.put("version", "0.1");
@@ -141,23 +132,8 @@ public class LevelConversions
 			output.add(obj.toString());
 			
 			LinkedList<Sprite> sprites = room.getSprites();
-			
-			ByteArrayOutputStream baos = null;
-			ObjectOutputStream oos = null;
-			
-			try
-			{
-				baos = new ByteArrayOutputStream();
-				oos = new ObjectOutputStream(baos);
-			}
-			catch (IOException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			int i = 0;
-			
+			LinkedList<String> names = io.addPlainSprites(sprites);
+			Iterator<String> it = names.iterator();
 			for(Sprite s: sprites)
 			{
 				//If it's a PNG type Sprite.
@@ -166,29 +142,13 @@ public class LevelConversions
 				obj.put("x", s.getX());
 				obj.put("y", s.getY());
 				obj.put("layer", s.getLayer());
+				obj.put("image", it.next());
 				
-				File temp = new File("" + i++ + ".png");
-				temp.deleteOnExit();
-				
-				ImageIO.write(s.print(), "png", temp);
-				
-				
+				output.add(obj.toJSONString());
 			}
 			
-			try
-			{
-				PrintWriter out = new PrintWriter(new FileWriter(f));
-				
-				for(String s: output)
-				{
-					out.println(s);
-				}
-			}
-			catch (IOException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			io.addLevelFile(output);
+			io.finish();
 		}
 		catch (Exception e)
 		{
